@@ -9,7 +9,7 @@ module.exports = function (app) {
         .post(AnnouncementManager.saveAndUpdateAnnouncementPost);
         // .post(AnnouncementManager.saveAnnouncement);
 
-    app.route('/announcement/:announcementId')
+    app.route('/announcement/:id')
         .get(AnnouncementManager.getAnnouncement)
         .post(AnnouncementManager.updateAnnouncementPost)
         .put(AnnouncementManager.updateAnnouncement)

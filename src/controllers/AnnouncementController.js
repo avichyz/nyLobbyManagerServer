@@ -1,11 +1,12 @@
 
 let mongoose = require('mongoose');
-var assert = require('assert');
 let AnnouncementSchema = mongoose.model('Announcement');
 
 exports.getAllAnnouncements = function (req, res) {
     AnnouncementSchema.find({}, function (err, announcement) {
-        if (err) res.send(err);
+        if (err) {
+            res.send(err);
+        }
         res.json(announcement);
     });
 };
@@ -15,8 +16,6 @@ exports.saveAnnouncement = function (req, res) {
     newAnnouncement.save(
         function (err, announcement) {
             if (err) {
-                assert.equal(err.errors['name'].message,
-                    'Path `name` is required.');
                 res.send(err);
             }
             res.json(announcement);
@@ -25,7 +24,7 @@ exports.saveAnnouncement = function (req, res) {
 
 
 exports.saveAndUpdateAnnouncementPost = function (req, res) {
-    AnnouncementSchema.findOneAndUpdate({ announcementId: req.body.announcementId }, req.body, { new: true },
+    AnnouncementSchema.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true },
         function (err, announcement) {
             // if the function found no Announcement, create one
             if (!announcement) {
@@ -33,11 +32,12 @@ exports.saveAndUpdateAnnouncementPost = function (req, res) {
                 newAnnouncement.save(
                     function (err, Announcement) {
                         if (err) {
-                            assert.equal(err.errors['name'].message,
-                                'Path `name` is required.');
                             res.send(err);
                         }
                     });
+            }
+            else { 
+                console.log(announcement);
             }
             res.json(announcement);
         });
@@ -46,7 +46,7 @@ exports.saveAndUpdateAnnouncementPost = function (req, res) {
 
 
 exports.getAnnouncement = function (req, res) {
-    AnnouncementSchema.findById(req.params.announcementId,
+    AnnouncementSchema.findById(req.params.id,
         function (err, announcement) {
             if (err) res.send(err);
             res.json(announcement);
@@ -54,7 +54,7 @@ exports.getAnnouncement = function (req, res) {
 };
 
 exports.updateAnnouncementPost = function (req, res) {
-    AnnouncementSchema.findOneAndUpdate({ announcementId: req.params.announcementId }, req.body, { new: true },
+    AnnouncementSchema.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true },
         function (err, announcement) {
             console.log(announcement)
             if (err) res.send(err);
@@ -64,7 +64,7 @@ exports.updateAnnouncementPost = function (req, res) {
 }
 
 exports.updateAnnouncement = function (req, res) {
-    AnnouncementSchema.findOneAndUpdate({ _id: req.params.announcementId }, req.body, { new: true },
+    AnnouncementSchema.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true },
         function (err, announcement) {
             console.log(announcement)
             if (err) res.send(err);
@@ -74,7 +74,7 @@ exports.updateAnnouncement = function (req, res) {
 }
 exports.deleteAnnouncement = function (req, res) {
     AnnouncementSchema.remove({
-        _id: req.params.announcementId
+        _id: req.params.id
     },
         function (err, announcement) {
             if (err) res.send(err);

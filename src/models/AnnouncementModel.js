@@ -3,9 +3,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AnnouncementSchema = new Schema({
-  // announcementId: {
-  //   type: String
-  // },
+  id: {
+    type: String
+  },
   title: {
     type: String
   },
@@ -18,6 +18,10 @@ var AnnouncementSchema = new Schema({
   createdDate: {
     type: Date,
     default: Date.now
+  },
+  isHidden: {
+    type: Boolean,
+    default: false
   },
   isDeleted: {
     type: Boolean,
