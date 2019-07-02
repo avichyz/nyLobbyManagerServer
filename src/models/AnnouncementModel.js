@@ -19,6 +19,10 @@ var AnnouncementSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  deletionDate: {
+    type: Date,
+    default: null
+  },
   isHidden: {
     type: Boolean,
     default: false

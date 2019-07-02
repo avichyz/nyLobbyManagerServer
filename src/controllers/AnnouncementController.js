@@ -73,15 +73,23 @@ exports.updateAnnouncement = function (req, res) {
     ;
 }
 exports.deleteAnnouncement = function (req, res) {
-    AnnouncementSchema.remove({
-        _id: req.params.id
-    },
+    AnnouncementSchema.findOneAndUpdate({ _id: req.params.id }, 
+        { isDeleted: true, deletionDate: new Date() }, 
+        { new: false },
         function (err, announcement) {
+            console.log(announcement)
             if (err) res.send(err);
-            res.json({ message: 'Announcement was succefully deleted' });
+            res.json(announcement);
         });
 };
 
+// AnnouncementSchema.remove({
+    //     _id: req.params.id
+    // },
+    //     function (err, announcement) {
+    //         if (err) res.send(err);
+    //         res.json({ message: 'Announcement was succefully deleted' });
+    //     });
 // exports.findAnnouncements = function (req, res) {
 //     return AnnouncementSchema.find({ $text: { $search: req.params.searchString} },
 //         function (err, announcement) {
