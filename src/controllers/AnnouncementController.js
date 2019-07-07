@@ -3,7 +3,7 @@ let mongoose = require('mongoose');
 let AnnouncementSchema = mongoose.model('Announcement');
 
 exports.getAllAnnouncements = function (req, res) {
-    AnnouncementSchema.find({}, function (err, announcement) {
+    AnnouncementSchema.find({ isDeleted: false }, function (err, announcement) {
         if (err) {
             res.send(err);
         }
